@@ -1,17 +1,17 @@
 public class MatrixAndWord {
-    private int matrixDimension;
+    private String matrixDimension;
     private String word;
     
-    public MatrixAndWord(int matrixDimension, String word) {
-        this.matrixDimension = matrixDimension;
-        this.word = word;
+    public MatrixAndWord(String matrixDimension, String word) {
+        this.matrixDimension = isValidInput(matrixDimension);
+        this.word = isValidInput(word);
     }
     
-    public int getMatrixDimension() {
+    public String getMatrixDimension() {
         return matrixDimension;
     }
     
-    public void setMatrixDimension(int matrixDimension) {
+    public void setMatrixDimension(String matrixDimension) {
         this.matrixDimension = matrixDimension;
     }
     
@@ -21,5 +21,12 @@ public class MatrixAndWord {
     
     public void setWord(String word) {
         this.word = word;
+    }
+    
+    private String isValidInput(String input) {
+        if (input == null) {
+            throw new RuntimeException("The input values shouldn't be null");
+        }
+        return input;
     }
 }
