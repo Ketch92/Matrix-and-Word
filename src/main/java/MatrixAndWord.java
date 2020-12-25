@@ -1,8 +1,10 @@
+import java.io.IOException;
+
 public class MatrixAndWord {
     private String matrix;
     private String word;
     
-    public MatrixAndWord(String matrix, String word) {
+    public MatrixAndWord(String matrix, String word) throws IOException {
         this.matrix = validateFirstParam(matrix);
         this.word = validateSecondParam(word, matrix);
     }
@@ -23,23 +25,33 @@ public class MatrixAndWord {
         this.word = word;
     }
     
-    private String validateFirstParam(String matrix) {
+    private String validateFirstParam(String matrix) throws IOException {
         if (matrix == null) {
-            throw new RuntimeException("The input values shouldn't be null");
+            throw new IOException("The input values shouldn't be null");
         }
         if (Math.sqrt(matrix.length()) % 1 != 0) {
-            throw new RuntimeException("Can't create square matrix of " + getMatrix()
+            throw new IOException("Can't create square matrix of " + getMatrix()
                     + "\n please provide proper input");
         }
         return matrix.toUpperCase();
     }
     
-    private String validateSecondParam(String word, String matrix) {
+    private String validateSecondParam(String word, String matrix) throws IOException {
         if (word == null) {
-            throw new RuntimeException("The input values shouldn't be null");
+            throw new IOException("The input values shouldn't be null");
         }
         if (word.length() > matrix.length()) {
-            throw new RuntimeException("It isn't possible to give a proper"
+            throw new IOException("It isn't possible to give a proper"
+                    + "output with given input parameters");
+        }
+        String actualMatrix = matrix;
+        for (String character : word.split("")) {
+            actualMatrix = actualMatrix.replaceFirst(character, "");
+        }
+        int actual = actualMatrix.length();
+        int expected = matrix.length() - word.length();
+        if (actual != expected) {
+            throw new IOException("It isn't possible to give a proper"
                     + "output with given input parameters");
         }
         return word.toUpperCase();
