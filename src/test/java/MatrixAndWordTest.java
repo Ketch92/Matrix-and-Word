@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -69,5 +70,17 @@ class MatrixAndWordTest {
     void invalidNonLetterParamInputs() {
         Assertions.assertThrows(IOException.class,
                 () -> new MatrixAndWord("som&thing", "s9o"));
+    }
+    
+    @Test
+    void getMatrix() throws IOException {
+        entity = new MatrixAndWord("some", "som");
+        char[][] actual = entity.getMatrix();
+        char[][] expected = new char[][]{{'S', 'O'}, {'M', 'E'}};
+        Assertions.assertEquals(Arrays.deepToString(expected), Arrays.deepToString(actual));
+        entity = new MatrixAndWord("SOMETHING", "som");
+        actual = entity.getMatrix();
+        expected = new char[][]{{'S', 'O', 'M'}, {'E', 'T', 'H'}, {'I', 'N', 'G'}};
+        Assertions.assertEquals(Arrays.deepToString(expected), Arrays.deepToString(actual));
     }
 }
