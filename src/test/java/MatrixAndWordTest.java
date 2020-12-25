@@ -100,5 +100,7 @@ class MatrixAndWordTest {
     void getChain() throws IOException {
         entity = new MatrixAndWord("QLGNAEKIRLRNGEAE", "KING");
         String actual = entity.getChain();
+        String expected = "[1,2]->[1,3]->[0,3]->[0,2]";
+        Assertions.assertEquals(expected, actual);
     }
 }

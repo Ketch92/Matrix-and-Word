@@ -6,10 +6,6 @@ public class MatrixAndWord {
     private String word;
     private int matrixDimensions;
     
-    public MatrixAndWord() {
-    
-    }
-    
     public MatrixAndWord(String matrix, String word) throws IOException {
         this.matrix = validateFirstParam(matrix);
         this.word = validateSecondParam(word, this.matrix);
@@ -17,7 +13,34 @@ public class MatrixAndWord {
     }
     
     public String getChain() {
-        return "";
+        int chainIndex = 0;
+        String tempMatrix = matrix;
+        String[] chain = new String[word.length()];
+        for (String wordChar : word.split("")) {
+            int index = tempMatrix.indexOf(wordChar);
+            chain[chainIndex++] = String.format("[%d,%d]", index / matrixDimensions, index % matrixDimensions);
+            tempMatrix = tempMatrix.replaceFirst(wordChar, " ");
+        }
+        return String.join("->", chain);
+    }
+    
+    public static String getChain(String matrix, String word) {
+        try {
+            validateFirstParam(matrix);
+            validateSecondParam(word, matrix);
+        } catch (IOException e) {
+            throw new RuntimeException("Can't perform correctly with given set of parameters", e);
+        }
+        int matrixDimensions = matrix.length();
+        int chainIndex = 0;
+        String tempMatrix = matrix;
+        String[] chain = new String[word.length()];
+        for (String wordChar : word.split("")) {
+            int index = tempMatrix.indexOf(wordChar);
+            chain[chainIndex++] = String.format("[%d,%d]", index / matrixDimensions, index % matrixDimensions);
+            tempMatrix = tempMatrix.replaceFirst(wordChar, " ");
+        }
+        return String.join("->", chain);
     }
     
     public char[][] getMatrix() {
@@ -53,7 +76,7 @@ public class MatrixAndWord {
         }
     }
     
-    private String validateFirstParam(String matrix) throws IOException {
+    private static String validateFirstParam(String matrix) throws IOException {
         isNotNullAndNotEmpty(matrix);
         consistsOfLetter(matrix);
         if (Math.sqrt(matrix.length()) % 1 != 0) {
@@ -63,7 +86,7 @@ public class MatrixAndWord {
         return matrix.toUpperCase();
     }
     
-    private String validateSecondParam(String word, String matrix) throws IOException {
+    private static String validateSecondParam(String word, String matrix) throws IOException {
         isNotNullAndNotEmpty(word);
         word = word.toUpperCase();
         consistsOfLetter(word);
@@ -84,13 +107,13 @@ public class MatrixAndWord {
         return word;
     }
     
-    private void isNotNullAndNotEmpty(String param) throws IOException {
+    private static void isNotNullAndNotEmpty(String param) throws IOException {
         if (param == null || param.isEmpty()) {
             throw new IOException("The input values shouldn't be null or empty");
         }
     }
     
-    private void consistsOfLetter(String param) throws IOException {
+    private static void consistsOfLetter(String param) throws IOException {
         if (!param.replaceAll("[a-zA-Z]", "").isEmpty()) {
             throw new IOException("Input parameters should contain only letter characters");
         }
