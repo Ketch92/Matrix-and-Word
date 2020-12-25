@@ -66,8 +66,8 @@ class MatrixAndWordTest {
     }
     
     @Test
-    void invalidNonCharMatrixParamInput() {
+    void invalidNonLetterParamInputs() {
         Assertions.assertThrows(IOException.class,
-                () -> new MatrixAndWord("something", "smoke"));
+                () -> new MatrixAndWord("som&thing", "s9o"));
     }
 }

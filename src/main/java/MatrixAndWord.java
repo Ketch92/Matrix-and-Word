@@ -27,6 +27,7 @@ public class MatrixAndWord {
     
     private String validateFirstParam(String matrix) throws IOException {
         isNotNull(matrix);
+        consistsOfLetter(matrix);
         if (Math.sqrt(matrix.length()) % 1 != 0) {
             throw new IOException("Can't create square matrix of " + getMatrix()
                     + "\n please provide proper input");
@@ -36,6 +37,7 @@ public class MatrixAndWord {
     
     private String validateSecondParam(String word, String matrix) throws IOException {
         isNotNull(word);
+        consistsOfLetter(word);
         if (word.length() > matrix.length()) {
             throw new IOException("It isn't possible to give a proper"
                     + "output with given input parameters");
@@ -56,6 +58,12 @@ public class MatrixAndWord {
     private void isNotNull(String param) throws IOException{
         if (param == null) {
             throw new IOException("The input values shouldn't be null");
+        }
+    }
+    
+    private void consistsOfLetter(String param) throws IOException {
+        if (!param.replaceAll("[a-zA-Z]", "").isEmpty()) {
+            throw new IOException("Input parameters should contain only letter characters");
         }
     }
 }
