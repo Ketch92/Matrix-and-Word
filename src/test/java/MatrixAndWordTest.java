@@ -7,9 +7,15 @@ class MatrixAndWordTest {
     private MatrixAndWord entity;
     
     @Test
-    void twoNullValuesInputExceptionExpected() {
+    void twoNullInputValuesExceptionExpected() {
         Assertions.assertThrows(IOException.class,
                 () -> new MatrixAndWord(null, null));
+    }
+    
+    @Test
+    void twoEmptyInputValuesExceptionExpected() {
+        Assertions.assertThrows(IOException.class,
+                () -> new MatrixAndWord("", ""));
     }
     
     @Test
@@ -78,9 +84,21 @@ class MatrixAndWordTest {
         char[][] actual = entity.getMatrix();
         char[][] expected = new char[][]{{'S', 'O'}, {'M', 'E'}};
         Assertions.assertEquals(Arrays.deepToString(expected), Arrays.deepToString(actual));
+        
         entity = new MatrixAndWord("SOMETHING", "som");
         actual = entity.getMatrix();
         expected = new char[][]{{'S', 'O', 'M'}, {'E', 'T', 'H'}, {'I', 'N', 'G'}};
         Assertions.assertEquals(Arrays.deepToString(expected), Arrays.deepToString(actual));
+        
+        entity = new MatrixAndWord("QWEASDZXC", "qwe");
+        actual = entity.getMatrix();
+        expected = new char[][]{{'Q', 'W', 'E'}, {'A', 'S', 'D'}, {'Z', 'X', 'C'}};
+        Assertions.assertEquals(Arrays.deepToString(expected), Arrays.deepToString(actual));
+    }
+    
+    @Test
+    void getChain() throws IOException {
+        entity = new MatrixAndWord("QLGNAEKIRLRNGEAE", "KING");
+        String actual = entity.getChain();
     }
 }

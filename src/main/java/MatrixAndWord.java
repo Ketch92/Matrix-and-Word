@@ -16,8 +16,8 @@ public class MatrixAndWord {
         matrixDimensions = (int) Math.sqrt(matrix.length());
     }
     
-    public String getMatrixParam() {
-        return matrix;
+    public String getChain() {
+        return "";
     }
     
     public char[][] getMatrix() {
@@ -26,6 +26,10 @@ public class MatrixAndWord {
             matrix[i] = Arrays.copyOfRange(this.matrix.toCharArray(),
                     i * matrixDimensions, (i + 1) * matrixDimensions);
         }
+        return matrix;
+    }
+    
+    public String getMatrixParam() {
         return matrix;
     }
     
@@ -50,7 +54,7 @@ public class MatrixAndWord {
     }
     
     private String validateFirstParam(String matrix) throws IOException {
-        isNotNull(matrix);
+        isNotNullAndNotEmpty(matrix);
         consistsOfLetter(matrix);
         if (Math.sqrt(matrix.length()) % 1 != 0) {
             throw new IOException("Can't create square matrix of " + matrix
@@ -60,7 +64,7 @@ public class MatrixAndWord {
     }
     
     private String validateSecondParam(String word, String matrix) throws IOException {
-        isNotNull(word);
+        isNotNullAndNotEmpty(word);
         word = word.toUpperCase();
         consistsOfLetter(word);
         if (word.length() > matrix.length()) {
@@ -80,9 +84,9 @@ public class MatrixAndWord {
         return word;
     }
     
-    private void isNotNull(String param) throws IOException {
-        if (param == null) {
-            throw new IOException("The input values shouldn't be null");
+    private void isNotNullAndNotEmpty(String param) throws IOException {
+        if (param == null || param.isEmpty()) {
+            throw new IOException("The input values shouldn't be null or empty");
         }
     }
     
