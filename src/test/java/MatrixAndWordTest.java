@@ -32,7 +32,7 @@ class MatrixAndWordTest {
     @Test
     void validMatrixParamLength() throws IOException {
         entity = new MatrixAndWord("some", "som");
-        String actual = entity.getMatrix();
+        String actual = entity.getMatrixParam();
         String expected = "SOME";
         Assertions.assertEquals(expected, actual);
     }

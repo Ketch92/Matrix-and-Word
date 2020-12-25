@@ -9,7 +9,7 @@ public class MatrixAndWord {
         this.word = validateSecondParam(word, matrix);
     }
     
-    public String getMatrix() {
+    public String getMatrixParam() {
         return matrix;
     }
     
@@ -29,7 +29,7 @@ public class MatrixAndWord {
         isNotNull(matrix);
         consistsOfLetter(matrix);
         if (Math.sqrt(matrix.length()) % 1 != 0) {
-            throw new IOException("Can't create square matrix of " + getMatrix()
+            throw new IOException("Can't create square matrix of " + matrix
                     + "\n please provide proper input");
         }
         return matrix.toUpperCase();
