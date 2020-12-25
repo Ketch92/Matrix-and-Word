@@ -3,11 +3,9 @@ import java.util.Arrays;
 
 public class MatrixAndWord {
     public static String getChain(String matrix, String word) throws IOException {
-        validateFirstParam(matrix);
-        validateSecondParam(word, matrix);
+        matrix = validateFirstParam(matrix);
+        word = validateSecondParam(word, matrix);
         
-        matrix = matrix.toUpperCase();
-        word = word.toUpperCase();
         int matrixDimensions = (int) Math.sqrt(matrix.length());
         int chainIndex = 0;
         String tempMatrix = matrix;
@@ -35,24 +33,31 @@ public class MatrixAndWord {
         return matrixArray;
     }
     
-    private static void validateFirstParam(String matrix) throws IOException {
+    private static String validateFirstParam(String matrix) throws IOException {
         isNotNullAndNotEmpty(matrix);
         consistsOfLetter(matrix);
+        
+        matrix = matrix.toUpperCase();
         if (Math.sqrt(matrix.length()) % 1 != 0) {
             throw new IOException("Can't create square matrix of " + matrix
                     + "\n please provide proper input");
         }
+        return matrix;
     }
     
-    private static void validateSecondParam(String word, String matrix) throws IOException {
+    private static String validateSecondParam(String word, String matrix) throws IOException {
         isNotNullAndNotEmpty(word);
+        consistsOfLetter(word);
+        validateFirstParam(matrix);
+        
         word = word.toUpperCase();
         matrix = matrix.toUpperCase();
-        consistsOfLetter(word);
+        
         if (word.length() > matrix.length()) {
             throw new IOException("It isn't possible to give a proper"
                     + "output with given input parameters");
         }
+        
         String actualMatrix = matrix;
         for (String character : word.split("")) {
             actualMatrix = actualMatrix.replaceFirst(character, "");
@@ -63,6 +68,7 @@ public class MatrixAndWord {
             throw new IOException("It isn't possible to give a proper"
                     + "output with given input parameters");
         }
+        return word;
     }
     
     private static void isNotNullAndNotEmpty(String param) throws IOException {
