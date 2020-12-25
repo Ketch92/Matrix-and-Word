@@ -8,7 +8,7 @@ class MatrixAndWordTest {
     @Test
     void twoNullValuesInputExceptionExpected() {
         Assertions.assertThrows(IOException.class,
-                MatrixAndWord::new);
+                () -> new MatrixAndWord(null, null));
     }
     
     @Test
