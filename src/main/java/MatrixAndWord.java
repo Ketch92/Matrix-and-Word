@@ -1,29 +1,7 @@
 import java.io.IOException;
 import java.util.Arrays;
 
-public class MatrixAndWord {
-    private String matrix;
-    private String word;
-    private int matrixDimensions;
-    
-    public MatrixAndWord(String matrix, String word) throws IOException {
-        this.matrix = validateFirstParam(matrix);
-        this.word = validateSecondParam(word, this.matrix);
-        matrixDimensions = (int) Math.sqrt(matrix.length());
-    }
-    
-    public String getChain() {
-        int chainIndex = 0;
-        String tempMatrix = matrix;
-        String[] chain = new String[word.length()];
-        for (String wordChar : word.split("")) {
-            int index = tempMatrix.indexOf(wordChar);
-            chain[chainIndex++] = String.format("[%d,%d]", index / matrixDimensions, index % matrixDimensions);
-            tempMatrix = tempMatrix.replaceFirst(wordChar, " ");
-        }
-        return String.join("->", chain);
-    }
-    
+public static class MatrixAndWord {
     public static String getChain(String matrix, String word) {
         try {
             validateFirstParam(matrix);
@@ -42,51 +20,26 @@ public class MatrixAndWord {
         }
         return String.join("->", chain);
     }
-    
-    public char[][] getMatrix() {
-        char[][] matrix = new char[matrixDimensions][];
-        for (int i = 0; i < matrix.length; i++) {
-            matrix[i] = Arrays.copyOfRange(this.matrix.toCharArray(),
-                    i * matrixDimensions, (i + 1) * matrixDimensions);
+    public char[][] getMatrix(String matrix) {
+        char[][] matrixArray = new char[matrix.length()][];
+        char[] matrixChars = matrix.toCharArray();
+        for (int i = 0; i < matrix.length(); i++) {
+            matrixArray[i] = Arrays.copyOfRange(matrixChars,
+                    i * matrix.length(), (i + 1) * matrix.length());
         }
-        return matrix;
+        return matrixArray;
     }
     
-    public String getMatrixParam() {
-        return matrix;
-    }
-    
-    public void setMatrix(String matrix) {
-        try {
-            this.matrix = validateFirstParam(matrix);
-        } catch (IOException e) {
-            throw new RuntimeException("Can't set " + matrix + " as parameter", e);
-        }
-    }
-    
-    public String getWord() {
-        return word;
-    }
-    
-    public void setWord(String word) {
-        try {
-            this.word = validateSecondParam(word, matrix);
-        } catch (IOException e) {
-            throw new RuntimeException("Can't set " + word + " as parameter", e);
-        }
-    }
-    
-    private static String validateFirstParam(String matrix) throws IOException {
+    private static void validateFirstParam(String matrix) throws IOException {
         isNotNullAndNotEmpty(matrix);
         consistsOfLetter(matrix);
         if (Math.sqrt(matrix.length()) % 1 != 0) {
             throw new IOException("Can't create square matrix of " + matrix
                     + "\n please provide proper input");
         }
-        return matrix.toUpperCase();
     }
     
-    private static String validateSecondParam(String word, String matrix) throws IOException {
+    private static void validateSecondParam(String word, String matrix) throws IOException {
         isNotNullAndNotEmpty(word);
         word = word.toUpperCase();
         consistsOfLetter(word);
@@ -104,7 +57,6 @@ public class MatrixAndWord {
             throw new IOException("It isn't possible to give a proper"
                     + "output with given input parameters");
         }
-        return word;
     }
     
     private static void isNotNullAndNotEmpty(String param) throws IOException {
