@@ -1,18 +1,18 @@
 import java.io.IOException;
 import java.util.Arrays;
 
-public static class MatrixAndWord {
-    public static String getChain(String matrix, String word) {
-        try {
-            validateFirstParam(matrix);
-            validateSecondParam(word, matrix);
-        } catch (IOException e) {
-            throw new RuntimeException("Can't perform correctly with given set of parameters", e);
-        }
+public class MatrixAndWord {
+    public static String getChain(String matrix, String word) throws IOException {
+        validateFirstParam(matrix);
+        validateSecondParam(word, matrix);
+        
+        matrix = matrix.toUpperCase();
+        word = word.toUpperCase();
         int matrixDimensions = matrix.length();
         int chainIndex = 0;
         String tempMatrix = matrix;
         String[] chain = new String[word.length()];
+        
         for (String wordChar : word.split("")) {
             int index = tempMatrix.indexOf(wordChar);
             chain[chainIndex++] = String.format("[%d,%d]", index / matrixDimensions, index % matrixDimensions);
@@ -20,9 +20,11 @@ public static class MatrixAndWord {
         }
         return String.join("->", chain);
     }
-    public char[][] getMatrix(String matrix) {
+    
+    public static char[][] getMatrix(String matrix) throws IOException {
+        validateFirstParam(matrix);
         char[][] matrixArray = new char[matrix.length()][];
-        char[] matrixChars = matrix.toCharArray();
+        char[] matrixChars = matrix.toUpperCase().toCharArray();
         for (int i = 0; i < matrix.length(); i++) {
             matrixArray[i] = Arrays.copyOfRange(matrixChars,
                     i * matrix.length(), (i + 1) * matrix.length());

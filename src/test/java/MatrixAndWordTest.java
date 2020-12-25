@@ -4,102 +4,73 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class MatrixAndWordTest {
-    private MatrixAndWord entity;
     
     @Test
     void twoNullInputValuesExceptionExpected() {
         Assertions.assertThrows(IOException.class,
-                () -> new MatrixAndWord(null, null));
+                () -> MatrixAndWord.getChain(null, null));
     }
     
     @Test
     void twoEmptyInputValuesExceptionExpected() {
         Assertions.assertThrows(IOException.class,
-                () -> new MatrixAndWord("", ""));
+                () -> MatrixAndWord.getChain("", ""));
     }
     
     @Test
     void firstNullValueInputExceptionExpected() {
         Assertions.assertThrows(IOException.class,
-                () -> new MatrixAndWord(null, "SOME"));
+                () -> MatrixAndWord.getChain(null, "SOME"));
     }
     
     @Test
     void secondNullValueInputExceptionExpected() {
         Assertions.assertThrows(IOException.class,
-                () -> new MatrixAndWord("SOME", null));
+                () -> MatrixAndWord.getChain("SOME", null));
     }
     
     @Test
     void invalidMatrixParamLength() {
         Assertions.assertThrows(Exception.class,
-                () -> new MatrixAndWord("som", "som"));
-    }
-    
-    @Test
-    void validMatrixParamLength() throws IOException {
-        entity = new MatrixAndWord("some", "som");
-        String actual = entity.getMatrixParam();
-        String expected = "SOME";
-        Assertions.assertEquals(expected, actual);
+                () -> MatrixAndWord.getChain("som", "som"));
     }
     
     @Test
     void invalidWordParamLength() {
         Assertions.assertThrows(IOException.class,
-                () -> new MatrixAndWord("Some", "something"));
-    }
-    
-    @Test
-    void validWordParamLength() throws IOException {
-        entity = new MatrixAndWord("some", "som");
-        String actual = entity.getWord();
-        String expected = "SOM";
-        Assertions.assertEquals(expected, actual);
+                () -> MatrixAndWord.getChain("Some", "something"));
     }
     
     @Test
     void invalidWordCharSequence() {
         Assertions.assertThrows(IOException.class,
-                () -> new MatrixAndWord("something", "smoke"));
-    }
-    
-    @Test
-    void validWordCharSequence() throws IOException {
-        entity = new MatrixAndWord("something", "some");
-        String actualWord = entity.getWord();
-        String expectedWord = "SOME";
-        Assertions.assertEquals(expectedWord, actualWord);
+                () -> MatrixAndWord.getChain("something", "smoke"));
     }
     
     @Test
     void invalidNonLetterParamInputs() {
         Assertions.assertThrows(IOException.class,
-                () -> new MatrixAndWord("som&thing", "s9o"));
+                () -> MatrixAndWord.getChain("som&thing", "s9o"));
     }
     
     @Test
     void getMatrix() throws IOException {
-        entity = new MatrixAndWord("some", "som");
-        char[][] actual = entity.getMatrix();
+        char[][] actual = MatrixAndWord.getMatrix("some");
         char[][] expected = new char[][]{{'S', 'O'}, {'M', 'E'}};
         Assertions.assertEquals(Arrays.deepToString(expected), Arrays.deepToString(actual));
         
-        entity = new MatrixAndWord("SOMETHING", "som");
-        actual = entity.getMatrix();
+        actual = MatrixAndWord.getMatrix("something");
         expected = new char[][]{{'S', 'O', 'M'}, {'E', 'T', 'H'}, {'I', 'N', 'G'}};
         Assertions.assertEquals(Arrays.deepToString(expected), Arrays.deepToString(actual));
         
-        entity = new MatrixAndWord("QWEASDZXC", "qwe");
-        actual = entity.getMatrix();
+        actual = MatrixAndWord.getMatrix("QWEASDZXC");
         expected = new char[][]{{'Q', 'W', 'E'}, {'A', 'S', 'D'}, {'Z', 'X', 'C'}};
         Assertions.assertEquals(Arrays.deepToString(expected), Arrays.deepToString(actual));
     }
     
     @Test
     void getChain() throws IOException {
-        entity = new MatrixAndWord("QLGNAEKIRLRNGEAE", "KING");
-        String actual = entity.getChain();
+        String actual = MatrixAndWord.getChain("QLGNAEKIRLRNGEAE", "KING");
         String expected = "[1,2]->[1,3]->[0,3]->[0,2]";
         Assertions.assertEquals(expected, actual);
     }
