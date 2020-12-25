@@ -6,6 +6,9 @@ public class MatrixAndWord {
         matrix = validateFirstParam(matrix);
         word = validateSecondParam(word, matrix);
         
+        String format = "[%d,%d]";
+        String delimiter = "->";
+        String space = " ";
         int matrixDimensions = (int) Math.sqrt(matrix.length());
         int chainIndex = 0;
         String tempMatrix = matrix;
@@ -13,10 +16,10 @@ public class MatrixAndWord {
         
         for (String wordChar : word.split("")) {
             int index = tempMatrix.indexOf(wordChar);
-            chain[chainIndex++] = String.format("[%d,%d]", index / matrixDimensions, index % matrixDimensions);
-            tempMatrix = tempMatrix.replaceFirst(wordChar, " ");
+            chain[chainIndex++] = String.format(format, index / matrixDimensions, index % matrixDimensions);
+            tempMatrix = tempMatrix.replaceFirst(wordChar, space);
         }
-        return String.join("->", chain);
+        return String.join(delimiter, chain);
     }
     
     public static char[][] getMatrix(String matrix) {
@@ -44,7 +47,7 @@ public class MatrixAndWord {
         matrix = matrix.toUpperCase();
         if (Math.sqrt(matrix.length()) % 1 != 0) {
             throw new IOException("Can't create square matrix of " + matrix
-                    + "\n please provide proper input");
+                    + "\nplease provide proper input");
         }
         return matrix;
     }
@@ -56,10 +59,11 @@ public class MatrixAndWord {
         
         word = word.toUpperCase();
         matrix = matrix.toUpperCase();
+        String errorMassage = "It isn't possible to give a proper "
+                + "output with given input parameters";
         
         if (word.length() > matrix.length()) {
-            throw new IOException("It isn't possible to give a proper"
-                    + "output with given input parameters");
+            throw new IOException(errorMassage);
         }
         
         String actualMatrix = matrix;
@@ -69,8 +73,7 @@ public class MatrixAndWord {
         int actual = actualMatrix.length();
         int expected = matrix.length() - word.length();
         if (actual != expected) {
-            throw new IOException("It isn't possible to give a proper"
-                    + "output with given input parameters");
+            throw new IOException(errorMassage);
         }
         return word;
     }
