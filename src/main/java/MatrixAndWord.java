@@ -1,18 +1,18 @@
 public class MatrixAndWord {
-    private String matrixDimension;
+    private String matrix;
     private String word;
     
     public MatrixAndWord(String matrixDimension, String word) {
-        this.matrixDimension = isValidInput(matrixDimension);
-        this.word = isValidInput(word);
+        this.matrix = validateFirstParam(matrixDimension);
+        this.word = validateSecondParam(word);
     }
     
-    public String getMatrixDimension() {
-        return matrixDimension;
+    public String getMatrix() {
+        return matrix;
     }
     
-    public void setMatrixDimension(String matrixDimension) {
-        this.matrixDimension = matrixDimension;
+    public void setMatrix(String matrix) {
+        this.matrix = matrix;
     }
     
     public String getWord() {
@@ -23,10 +23,21 @@ public class MatrixAndWord {
         this.word = word;
     }
     
-    private String isValidInput(String input) {
-        if (input == null) {
+    private String validateFirstParam(String matrix) {
+        if (matrix == null) {
             throw new RuntimeException("The input values shouldn't be null");
         }
-        return input;
+        if (Math.sqrt(matrix.length()) % 1 != 0) {
+            throw new RuntimeException("Can't create square matrix of " + getMatrix()
+                    + "\n please provide proper input");
+        }
+        return matrix.toUpperCase();
+    }
+    
+    private String validateSecondParam(String word) {
+        if (word == null) {
+            throw new RuntimeException("The input values shouldn't be null");
+        }
+        return word.toUpperCase();
     }
 }

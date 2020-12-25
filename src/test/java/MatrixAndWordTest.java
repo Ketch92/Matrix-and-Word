@@ -22,11 +22,9 @@ class MatrixAndWordTest {
                 () -> new MatrixAndWord("SOME", null));
     }
     
-//    @Test
-//    void validStringLength() {
-//        int actualLength = entity.getMatrixDimension().length();
-//        for (int i = 1; i < 100; i++) {
-//            if(actualLength == Math.pow(i, 2));
-//        }
-//    }
+    @Test
+    void validStringLength() {
+        Assertions.assertThrows(RuntimeException.class,
+                () -> new MatrixAndWord("som", "som"));
+    }
 }
