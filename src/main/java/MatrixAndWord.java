@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Arrays;
 
 public class MatrixAndWord {
     private String matrix;
@@ -11,7 +12,7 @@ public class MatrixAndWord {
     
     public MatrixAndWord(String matrix, String word) throws IOException {
         this.matrix = validateFirstParam(matrix);
-        this.word = validateSecondParam(word, matrix);
+        this.word = validateSecondParam(word, this.matrix);
         matrixDimensions = (int) Math.sqrt(matrix.length());
     }
     
@@ -19,8 +20,12 @@ public class MatrixAndWord {
         return matrix;
     }
     
-    public char[] getMatrix() {
-        char[] matrix = new char[matrixDimensions];
+    public char[][] getMatrix() {
+        char[][] matrix = new char[matrixDimensions][];
+        for (int i = 0; i < matrix.length; i++) {
+            matrix[i] = Arrays.copyOfRange(this.matrix.toCharArray(),
+                    i * matrixDimensions, (i + 1) * matrixDimensions);
+        }
         return matrix;
     }
     
@@ -56,6 +61,7 @@ public class MatrixAndWord {
     
     private String validateSecondParam(String word, String matrix) throws IOException {
         isNotNull(word);
+        word = word.toUpperCase();
         consistsOfLetter(word);
         if (word.length() > matrix.length()) {
             throw new IOException("It isn't possible to give a proper"
@@ -71,7 +77,7 @@ public class MatrixAndWord {
             throw new IOException("It isn't possible to give a proper"
                     + "output with given input parameters");
         }
-        return word.toUpperCase();
+        return word;
     }
     
     private void isNotNull(String param) throws IOException{
