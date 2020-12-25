@@ -3,6 +3,7 @@ import java.io.IOException;
 public class MatrixAndWord {
     private String matrix;
     private String word;
+    private int matrixDimensions;
     
     public MatrixAndWord() {
     
@@ -11,14 +12,24 @@ public class MatrixAndWord {
     public MatrixAndWord(String matrix, String word) throws IOException {
         this.matrix = validateFirstParam(matrix);
         this.word = validateSecondParam(word, matrix);
+        matrixDimensions = (int) Math.sqrt(matrix.length());
     }
     
     public String getMatrixParam() {
         return matrix;
     }
     
+    public char[] getMatrix() {
+        char[] matrix = new char[matrixDimensions];
+        return matrix;
+    }
+    
     public void setMatrix(String matrix) {
-        this.matrix = matrix;
+        try {
+            this.matrix = validateFirstParam(matrix);
+        } catch (IOException e) {
+            throw new RuntimeException("Can't set " + matrix + " as parameter", e);
+        }
     }
     
     public String getWord() {
@@ -26,7 +37,11 @@ public class MatrixAndWord {
     }
     
     public void setWord(String word) {
-        this.word = word;
+        try {
+            this.word = validateSecondParam(word, matrix);
+        } catch (IOException e) {
+            throw new RuntimeException("Can't set " + word + " as parameter", e);
+        }
     }
     
     private String validateFirstParam(String matrix) throws IOException {
