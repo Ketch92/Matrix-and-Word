@@ -19,9 +19,13 @@ public class MatrixAndWord {
         return String.join("->", chain);
     }
     
-    public static char[][] getMatrix(String matrix) throws IOException {
-        validateFirstParam(matrix);
-        
+    public static char[][] getMatrix(String matrix) {
+        try {
+            validateFirstParam(matrix);
+        } catch (IOException e) {
+            throw new RuntimeException("Something went wrong with given value");
+        }
+    
         int length = (int) Math.sqrt(matrix.length());
         char[][] matrixArray = new char[length][];
         char[] matrixChars = matrix.toUpperCase().toCharArray();
@@ -33,7 +37,7 @@ public class MatrixAndWord {
         return matrixArray;
     }
     
-    private static String validateFirstParam(String matrix) throws IOException {
+    public static String validateFirstParam(String matrix) throws IOException {
         isNotNullAndNotEmpty(matrix);
         consistsOfLetter(matrix);
         
@@ -45,7 +49,7 @@ public class MatrixAndWord {
         return matrix;
     }
     
-    private static String validateSecondParam(String word, String matrix) throws IOException {
+    public static String validateSecondParam(String word, String matrix) throws IOException {
         isNotNullAndNotEmpty(word);
         consistsOfLetter(word);
         validateFirstParam(matrix);
