@@ -64,4 +64,10 @@ class MatrixAndWordTest {
         String expectedWord = "SOME";
         Assertions.assertEquals(expectedWord, actualWord);
     }
+    
+    @Test
+    void invalidNonCharMatrixParamInput() {
+        Assertions.assertThrows(IOException.class,
+                () -> new MatrixAndWord("something", "smoke"));
+    }
 }
