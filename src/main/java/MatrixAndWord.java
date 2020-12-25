@@ -4,6 +4,10 @@ public class MatrixAndWord {
     private String matrix;
     private String word;
     
+    public MatrixAndWord() {
+    
+    }
+    
     public MatrixAndWord(String matrix, String word) throws IOException {
         this.matrix = validateFirstParam(matrix);
         this.word = validateSecondParam(word, matrix);
