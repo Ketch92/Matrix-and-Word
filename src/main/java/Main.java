@@ -45,7 +45,8 @@ public class Main {
             System.out.println(errorMassage + e.getMessage());
         }
         System.out.println(anotherRunMassage);
-        return scanner.nextLine();
+        
+        return scanner.nextLine().toUpperCase();
     }
     
     private static String firstParamInput(Scanner scanner, String stopWord) {
@@ -58,7 +59,7 @@ public class Main {
         } catch (IOException e) {
             System.out.println(e.getMessage());
             System.out.println(anotherTryMassage);
-            firstParamInput(scanner, stopWord);
+            matrix = firstParamInput(scanner, stopWord);
         }
         System.out.println(matrixMassage);
         System.out.println(Arrays.deepToString(MatrixAndWord.getMatrix(matrix)));
@@ -76,7 +77,7 @@ public class Main {
         } catch (IOException e) {
             System.out.println(e.getMessage());
             System.out.println(anotherTryMassage);
-            secondParamInput(scanner, stopWord, matrix);
+            word = secondParamInput(scanner, stopWord, matrix);
         }
         return word;
     }

@@ -16,7 +16,8 @@ public class MatrixAndWord {
         
         for (String wordChar : word.split("")) {
             int index = tempMatrix.indexOf(wordChar);
-            chain[chainIndex++] = String.format(format, index / matrixDimensions, index % matrixDimensions);
+            chain[chainIndex++] = String.format(format, index / matrixDimensions,
+                    index % matrixDimensions);
             tempMatrix = tempMatrix.replaceFirst(wordChar, space);
         }
         return String.join(delimiter, chain);
