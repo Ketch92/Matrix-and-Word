@@ -8,7 +8,7 @@ public class MatrixAndWord {
         
         matrix = matrix.toUpperCase();
         word = word.toUpperCase();
-        int matrixDimensions = matrix.length();
+        int matrixDimensions = (int) Math.sqrt(matrix.length());
         int chainIndex = 0;
         String tempMatrix = matrix;
         String[] chain = new String[word.length()];
@@ -23,11 +23,14 @@ public class MatrixAndWord {
     
     public static char[][] getMatrix(String matrix) throws IOException {
         validateFirstParam(matrix);
-        char[][] matrixArray = new char[matrix.length()][];
+    
+        int length = (int) Math.sqrt(matrix.length());
+        char[][] matrixArray = new char[length][];
         char[] matrixChars = matrix.toUpperCase().toCharArray();
-        for (int i = 0; i < matrix.length(); i++) {
+        
+        for (int i = 0; i < length; i++) {
             matrixArray[i] = Arrays.copyOfRange(matrixChars,
-                    i * matrix.length(), (i + 1) * matrix.length());
+                    i * length, (i + 1) * length);
         }
         return matrixArray;
     }
@@ -44,6 +47,7 @@ public class MatrixAndWord {
     private static void validateSecondParam(String word, String matrix) throws IOException {
         isNotNullAndNotEmpty(word);
         word = word.toUpperCase();
+        matrix = matrix.toUpperCase();
         consistsOfLetter(word);
         if (word.length() > matrix.length()) {
             throw new IOException("It isn't possible to give a proper"
