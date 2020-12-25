@@ -21,7 +21,7 @@ public class MatrixAndWord {
     
     public static char[][] getMatrix(String matrix) throws IOException {
         validateFirstParam(matrix);
-    
+        
         int length = (int) Math.sqrt(matrix.length());
         char[][] matrixArray = new char[length][];
         char[] matrixChars = matrix.toUpperCase().toCharArray();
