@@ -2,9 +2,9 @@ public class MatrixAndWord {
     private String matrix;
     private String word;
     
-    public MatrixAndWord(String matrixDimension, String word) {
-        this.matrix = validateFirstParam(matrixDimension);
-        this.word = validateSecondParam(word);
+    public MatrixAndWord(String matrix, String word) {
+        this.matrix = validateFirstParam(matrix);
+        this.word = validateSecondParam(word, matrix);
     }
     
     public String getMatrix() {
@@ -34,9 +34,13 @@ public class MatrixAndWord {
         return matrix.toUpperCase();
     }
     
-    private String validateSecondParam(String word) {
+    private String validateSecondParam(String word, String matrix) {
         if (word == null) {
             throw new RuntimeException("The input values shouldn't be null");
+        }
+        if (word.length() > matrix.length()) {
+            throw new RuntimeException("It isn't possible to give a proper"
+                    + "output with given input parameters");
         }
         return word.toUpperCase();
     }
